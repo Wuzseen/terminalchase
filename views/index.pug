@@ -1,0 +1,20 @@
+extends layout
+
+block header
+  script(src='/node_modules/angular/angular.js')
+  script(src='/socket.io/socket.io.js')
+  script(type='text/javascript').
+    var socket = io.connect('http://45.79.160.70:2500');
+    socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+    });
+
+    var greetings = function() {
+        socket.emit('news', { test: 'data' });
+    }
+  
+block content
+  h1= title
+  p Welcome to #{title}
+  button(onclick='greetings()') Click
